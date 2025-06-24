@@ -1,4 +1,3 @@
-// src/styles/GlobalStyle.ts
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
@@ -10,8 +9,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${(props) => props.theme.colors.background}; // CORRETO: Fundo geral da página
+    color: ${(props) => props.theme.colors.primary};             // CORRETO: Cor principal do texto
   }
 
   .container {

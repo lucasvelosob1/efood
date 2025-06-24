@@ -1,5 +1,5 @@
 // src/pages/Home/index.tsx
 const Home = () => {
-    return <h1>Página Home - ycomida</h1>
+    return <h1>Página Home - efood</h1>
 }
 export default Home;

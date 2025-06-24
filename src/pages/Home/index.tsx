@@ -1,15 +1,16 @@
 // src/pages/Home/index.tsx
-import Header from '../../components/Header';
-// Importe outros componentes que você criará, como RestaurantList
+
+// 1. Remova a importação do Header e adicione a do Hero
+import Hero from '../../components/Hero';
+import RestaurantList from '../../components/RestaurantList';
+
+import restaurantesMock from '../../services/mock';
 
 const Home = () => {
   return (
     <>
-      <Header />
-      <div className="container">
-        <h2>Lista de Restaurantes</h2>
-        {/* Aqui você renderizará o componente <RestaurantList /> */}
-      </div>
+      <Hero />
+      <RestaurantList restaurants={restaurantesMock} />
     </>
   );
 };

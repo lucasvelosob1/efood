@@ -1,15 +1,12 @@
 // src/styles/theme.ts
 
-// Cor primária extraída da sua logo "ycomida"
-const ycomidaBlue = '#3777f5'; 
-
-const theme = {
+const efoodTheme = {
   colors: {
-    primary: ycomidaBlue,
-    secondary: '#FFEBD9', // Cor de fundo do e-food original, pode ajustar
+    primary: '#E66767',
+    secondary: '#FFEBD9',
     background: '#FFF8F2',
-    text: ycomidaBlue,
-    white: '#FFFFFF',
+    text: '#E66767',
+    white: '#FFFFFF', // A propriedade 'white' está definida aqui.
   },
   fontSizes: {
     small: '12px',
@@ -23,5 +20,8 @@ const theme = {
   },
 };
 
-export type Theme = typeof theme;
-export default theme;
+// Exporta o TIPO para o TypeScript
+export type Theme = typeof efoodTheme;
+
+// Exporta o VALOR para o React
+export default efoodTheme;

@@ -1,34 +1,40 @@
 // src/components/Header/styles.ts
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const HeaderBar = styled.header`
-  background-color: ${(props) => props.theme.colors.secondary};
-  padding: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// Definimos o tipo das props que o HeaderBar vai receber
+type HeaderProps = {
+  backgroundImage: string;
+};
 
-  img {
-    height: 58px;
+export const HeaderBar = styled.header<HeaderProps>`
+  background-image: url(${(props) => props.backgroundImage});
+  background-size: cover;
+  background-position: center;
+  padding: 40px 0;
+  font-weight: bold;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 
-// theme.ts
-export const theme = {
-  colors: {
-    primary: '#ff0000',
-    secondary: '#00ff00', // Add your desired secondary color here
-  },
-};
+export const Logo = styled.img`
+  height: 58px;
+`;
 
-// styled.d.ts
-import 'styled-components';
+export const NavLink = styled(Link)`
+  color: ${(props) => props.theme.colors.primary};
+  text-decoration: none;
+  font-size: 18px;
+`;
 
-declare module 'styled-components' {
-  export interface DefaultTheme {
-    colors: {
-      primary: string;
-      secondary: string;
-    };
-  }
-}
+// Usamos <a> em vez de <button> porque ele não envia um formulário, apenas executa uma ação.
+export const CartButton = styled.a`
+  color: ${(props) => props.theme.colors.primary};
+  text-decoration: none;
+  font-size: 18px;
+  cursor: pointer;
+`;

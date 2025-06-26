@@ -1,31 +1,28 @@
-// src/context/cart.tsx
 import { createContext, useReducer, useContext } from 'react';
 import { Product } from '../services/mock';
 
-// Tipos para o nosso estado e ações
 type CartState = {
   items: Product[];
   isOpen: boolean;
+  step: 'cart' | 'delivery' | 'payment' | 'confirmed';
 };
 
 type Action =
   | { type: 'ADD_ITEM'; payload: Product }
-  | { type: 'REMOVE_ITEM'; payload: number } // id do produto
+  | { type: 'REMOVE_ITEM'; payload: number }
   | { type: 'OPEN_CART' }
-  | { type: 'CLOSE_CART' };
+  | { type: 'CLOSE_CART' }
+  | { type: 'CHANGE_STEP'; payload: CartState['step'] };
 
-// Estado inicial
 const initialState: CartState = {
   items: [],
   isOpen: false,
+  step: 'cart',
 };
 
-// O Reducer: a lógica pura de como o estado muda
 const cartReducer = (state: CartState, action: Action): CartState => {
   switch (action.type) {
     case 'ADD_ITEM':
-      // Verifica se o item já existe para evitar duplicatas, se quiser
-      // Por simplicidade, vamos permitir duplicatas como no iFood
       return {
         ...state,
         items: [...state.items, action.payload],
@@ -44,19 +41,23 @@ const cartReducer = (state: CartState, action: Action): CartState => {
       return {
         ...state,
         isOpen: false,
+        step: 'cart' 
+      };
+    case 'CHANGE_STEP':
+      return {
+        ...state,
+        step: action.payload,
       };
     default:
       return state;
   }
 };
 
-// Criando o Contexto
 const CartContext = createContext<{
   state: CartState;
   dispatch: React.Dispatch<Action>;
 } | undefined>(undefined);
 
-// O Provedor do Contexto
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
@@ -67,7 +68,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// Hook customizado para facilitar o uso do contexto
 export const useCart = () => {
   const context = useContext(CartContext);
   if (context === undefined) {

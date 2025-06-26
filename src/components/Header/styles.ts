@@ -1,8 +1,6 @@
-// src/components/Header/styles.ts
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-// Definimos o tipo das props que o HeaderBar vai receber
 type HeaderProps = {
   backgroundImage: string;
 };
@@ -31,7 +29,6 @@ export const NavLink = styled(Link)`
   font-size: 18px;
 `;
 
-// Usamos <a> em vez de <button> porque ele não envia um formulário, apenas executa uma ação.
 export const CartButton = styled.a`
   color: ${(props) => props.theme.colors.primary};
   text-decoration: none;

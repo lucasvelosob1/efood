@@ -1,4 +1,3 @@
-// src/mock_data.ts
 import { Restaurant } from './models/Restaurant'
 
 export const mockRestaurants: Restaurant[] = [

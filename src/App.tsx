@@ -1,13 +1,12 @@
-// src/App.tsx
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { CartProvider } from './context/cart'; // Importe o Provedor
+import { CartProvider } from './context/cart'; 
 
 import AppRoutes from './routes';
 import { GlobalStyle } from './styles/GlobalStyle';
 import theme from './styles/theme';
 import Footer from './components/Footer';
-import Cart from './components/Cart'; // Importe o Carrinho
+import Cart from './components/Cart';
 
 function App() {
   return (

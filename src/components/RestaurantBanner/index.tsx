@@ -1,4 +1,3 @@
-// src/components/RestaurantBanner/index.tsx
 import * as S from './styles';
 
 type Props = {

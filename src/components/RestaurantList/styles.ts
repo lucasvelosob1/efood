@@ -1,5 +1,3 @@
-// src/components/RestaurantList/styles.ts
-
 import styled from 'styled-components';
 
 export const ListContainer = styled.div`
@@ -11,7 +9,7 @@ export const ListContainer = styled.div`
 
 export const ListGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr); // O design original pede 2 colunas
+  grid-template-columns: repeat(2, 1fr);
   gap: 48px 80px;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

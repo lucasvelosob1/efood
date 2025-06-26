@@ -9,8 +9,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: ${(props) => props.theme.colors.background}; // CORRETO: Fundo geral da página
-    color: ${(props) => props.theme.colors.primary};             // CORRETO: Cor principal do texto
+    background-color: ${(props) => props.theme.colors.background};
+    color: ${(props) => props.theme.colors.primary};
   }
 
   .container {

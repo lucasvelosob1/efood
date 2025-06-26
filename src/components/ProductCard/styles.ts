@@ -1,6 +1,4 @@
-// src/components/ProductCard/styles.ts
 import styled from 'styled-components';
-// NÃO PRECISAMOS MAIS DO IMPORT DO TEMA AQUI
 
 export const CardContainer = styled.div`
   background-color: ${(props) => props.theme.colors.primary};

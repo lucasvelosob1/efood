@@ -1,7 +1,6 @@
-// src/components/RestaurantCard/styles.ts
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { TagContainer } from '../Tag/styles'; // Importa o container da Tag
+import { TagContainer } from '../Tag/styles';
 
 export const Card = styled.div`
   background-color: ${(props) => props.theme.colors.white};

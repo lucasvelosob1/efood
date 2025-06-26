@@ -1,5 +1,5 @@
-import { Restaurant } from '../../services/mock'; // Importa o TIPO de um restaurante
-import RestaurantCard from '../RestaurantCard'; // Importa o componente do card
+import { Restaurant } from '../../services/mock';
+import RestaurantCard from '../RestaurantCard';
 import * as S from './styles';
 
 type Props = {

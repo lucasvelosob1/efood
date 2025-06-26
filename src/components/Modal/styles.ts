@@ -1,6 +1,4 @@
-// src/components/Modal/styles.ts
 import styled from 'styled-components';
-// REMOVEMOS O IMPORT DO TEMA DAQUI
 import closeIcon from '../../assets/close.svg';
 
 export const ModalContainer = styled.div`

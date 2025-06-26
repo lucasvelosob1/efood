@@ -1,7 +1,5 @@
-// src/components/Footer/index.tsx
 import * as S from './styles';
 
-// Importando a logo do efood e os ícones
 import logo from '../../assets/logo.png';
 import instagramIcon from '../../assets/instagram.svg';
 import facebookIcon from '../../assets/facebook.svg';

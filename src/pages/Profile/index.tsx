@@ -1,4 +1,3 @@
-// src/pages/Profile/index.tsx
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 

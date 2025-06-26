@@ -1,7 +1,6 @@
-// src/components/RestaurantCard/index.tsx
 import { Restaurant } from '../../services/mock';
-import Tag from '../Tag'; // Importando nosso novo componente Tag
-import starIcon from '../../assets/star.svg'; // Importando o ícone de estrela
+import Tag from '../Tag';
+import starIcon from '../../assets/star.svg';
 
 import * as S from './styles';
 

@@ -1,6 +1,5 @@
-// src/components/Cart/styles.ts
 import styled from 'styled-components';
-import trashIcon from '../../assets/trash.svg'; // Garanta que este arquivo exista
+import trashIcon from '../../assets/trash.svg';
 
 export const CartContainer = styled.div`
   position: fixed;
@@ -84,7 +83,51 @@ export const TotalPrice = styled.p`
   justify-content: space-between;
 `;
 
-export const CheckoutButton = styled.button`
+export const FormContainer = styled.form`
+  color: ${(props) => props.theme.colors.secondary};
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 22px;
+
+  h4 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin-bottom: 24px;
+  }
+`;
+
+export const Row = styled.div`
+  display: flex;
+  gap: 34px;
+  align-items: flex-end;
+`;
+
+export const InputGroup = styled.div`
+  flex: 1;
+  margin-top: 8px;
+`;
+
+export const Label = styled.label`
+  display: block;
+  margin-bottom: 8px;
+`;
+
+export const Input = styled.input`
+  background-color: ${(props) => props.theme.colors.secondary};
+  border: none;
+  height: 32px;
+  padding: 0 8px;
+  width: 100%;
+
+  &.error {
+    border: 2px solid red;
+  }
+`;
+
+export const ActionButton = styled.button`
   background-color: ${(props) => props.theme.colors.secondary};
   color: ${(props) => props.theme.colors.primary};
   border: none;
@@ -94,3 +137,13 @@ export const CheckoutButton = styled.button`
   font-weight: bold;
   cursor: pointer;
 `;
+
+export const ButtonGroup = styled.div`
+  margin-top: 24px;
+
+  ${ActionButton}:first-child {
+    margin-bottom: 8px;
+  }
+`;
+
+export const CheckoutButton = styled(ActionButton)``;

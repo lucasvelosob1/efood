@@ -1,10 +1,9 @@
-// src/components/ProductCard/index.tsx
 import { Product } from '../../services/mock';
 import * as S from './styles';
 
 type Props = {
   product: Product;
-  onOpenModal: (product: Product) => void; // Nova prop para abrir o modal
+  onOpenModal: (product: Product) => void;
 };
 
 const ProductCard = ({ product, onOpenModal }: Props) => (

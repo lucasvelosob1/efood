@@ -1,6 +1,5 @@
-// src/components/Header/index.tsx
 import * as S from './styles';
-import { useCart } from '../../context/cart'; // Importe o hook do carrinho
+import { useCart } from '../../context/cart';
 
 import logo from '../../assets/logo.png';
 import fundoImg from '../../assets/fundo.png';

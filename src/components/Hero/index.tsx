@@ -1,7 +1,5 @@
-// src/components/Hero/index.tsx
 import * as S from './styles';
 
-// Importando a sua logo
 import logoImg from '../../assets/logo.png';
 
 const Hero = () => (

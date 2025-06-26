@@ -1,4 +1,3 @@
-// src/components/Modal/index.tsx
 import { Product } from '../../services/mock';
 import * as S from './styles';
 import { useCart } from '../../context/cart';
@@ -13,8 +12,8 @@ const Modal = ({ product, onClose }: Props) => {
 
   const handleAddToCart = () => {
     dispatch({ type: 'ADD_ITEM', payload: product });
-    onClose(); // Fecha o modal de detalhes
-    dispatch({ type: 'OPEN_CART' }); // Abre o carrinho
+    onClose();
+    dispatch({ type: 'OPEN_CART' });
   };
 
   const formatPrice = (price: number) => {

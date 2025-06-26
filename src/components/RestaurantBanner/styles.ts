@@ -1,4 +1,3 @@
-// src/components/RestaurantBanner/styles.ts
 import styled from 'styled-components';
 
 export const BannerContainer = styled.div`

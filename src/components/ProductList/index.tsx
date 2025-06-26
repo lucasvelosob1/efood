@@ -1,4 +1,3 @@
-// src/components/ProductList/index.tsx
 import { Product } from '../../services/mock';
 import ProductCard from '../ProductCard';
 import * as S from './styles';

@@ -1,18 +1,20 @@
-import * as S from './styles';
+import * as S from './styles'
 
 type Props = {
-  cuisine: string;
-  name: string;
-  coverImage: string;
-};
+  coverImage: string
+  cuisine: string
+  name: string
+}
 
-const RestaurantBanner = ({ cuisine, name, coverImage }: Props) => (
-  <S.BannerContainer style={{ backgroundImage: `url(${coverImage})` }}>
-    <div className="container">
-      <S.CuisineType>{cuisine}</S.CuisineType>
-      <S.RestaurantName>{name}</S.RestaurantName>
-    </div>
-  </S.BannerContainer>
-);
+const RestaurantBanner = ({ coverImage, cuisine, name }: Props) => {
+  return (
+    <S.BannerContainer style={{ backgroundImage: `url(${coverImage})` }}>
+      <div className="container">
+        <S.CuisineType>{cuisine}</S.CuisineType>
+        <S.RestaurantName>{name}</S.RestaurantName>
+      </div>
+    </S.BannerContainer>
+  )
+}
 
-export default RestaurantBanner;
+export default RestaurantBanner

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CheckoutContainer = styled.div`
   padding: 40px 0;
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.cores.begeMedio};
   font-size: 14px;
   font-weight: bold;
 

@@ -1,37 +1,43 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import fundoImg from '../../assets/fundo.png'
 
-type HeaderProps = {
-  backgroundImage: string;
-};
-
-export const HeaderBar = styled.header<HeaderProps>`
-  background-image: url(${(props) => props.backgroundImage});
+export const HeaderBar = styled.header`
+  background-image: url(${fundoImg});
   background-size: cover;
   background-position: center;
-  padding: 40px 0;
+  height: 186px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
 
   .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
   }
-`;
+`
 
-export const Logo = styled.img`
-  height: 58px;
-`;
+export const LogoLink = styled(Link)`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  img {
+    width: 125px;
+  }
+`
 
 export const NavLink = styled(Link)`
-  color: ${(props) => props.theme.colors.primary};
-  text-decoration: none;
+  color: ${(props) => props.theme.cores.rosa};
   font-size: 18px;
-`;
+  font-weight: 900;
+`
 
 export const CartButton = styled.a`
-  color: ${(props) => props.theme.colors.primary};
-  text-decoration: none;
+  color: ${(props) => props.theme.cores.rosa};
   font-size: 18px;
+  font-weight: 900;
   cursor: pointer;
-`;
+`

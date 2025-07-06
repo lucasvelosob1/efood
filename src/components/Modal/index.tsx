@@ -1,44 +1,44 @@
-import { Product } from '../../services/mock';
-import * as S from './styles';
-import { useCart } from '../../context/cart';
+import { Product } from '../../services/mock'
+import { useCart } from '../../context/cart'
+import * as S from './styles'
+import closeIcon from '../../assets/close.svg'
 
 type Props = {
-  product: Product;
-  onClose: () => void;
-};
+  product: Product
+  onClose: () => void
+}
+
+const formataPreco = (preco = 0) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(preco)
+}
 
 const Modal = ({ product, onClose }: Props) => {
-  const { dispatch } = useCart();
+  const { dispatch } = useCart()
 
-  const handleAddToCart = () => {
-    dispatch({ type: 'ADD_ITEM', payload: product });
-    onClose();
-    dispatch({ type: 'OPEN_CART' });
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(price);
-  };
+  const addToCart = () => {
+    dispatch({ type: 'ADD_ITEM', payload: product })
+    onClose()
+  }
 
   return (
-    <S.ModalContainer onClick={onClose}>
-      <S.ModalContent className="container" onClick={(e) => e.stopPropagation()}>
-        <S.CloseButton onClick={onClose} />
-        <img src={product.foto} alt={product.nome} />
-        <div>
-          <h4>{product.nome}</h4>
-          <p>{product.descricao}</p>
-          <p>Serve: {product.porcao}</p>
-          <S.AddToCartButton onClick={handleAddToCart}>
-            Adicionar ao carrinho - {formatPrice(product.preco)}
+    <S.Overlay onClick={onClose}>
+      <S.ModalContent onClick={(e) => e.stopPropagation()}>
+        <S.CloseIcon src={closeIcon} alt="Ícone de fechar" onClick={onClose} />
+        <S.ProductImage src={product.foto} alt={product.nome} />
+        <S.InfosContainer>
+          <S.Title>{product.nome}</S.Title>
+          <S.Description>{product.descricaoDetalhada}</S.Description>
+          <S.Portion>Serve: {product.porcao}</S.Portion>
+          <S.AddToCartButton onClick={addToCart}>
+            Adicionar ao carrinho - {formataPreco(product.preco)}
           </S.AddToCartButton>
-        </div>
+        </S.InfosContainer>
       </S.ModalContent>
-    </S.ModalContainer>
-  );
-};
+    </S.Overlay>
+  )
+}
 
-export default Modal;
+export default Modal

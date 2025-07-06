@@ -11,8 +11,17 @@ const RestaurantList = ({ restaurants }: Props) => {
     <S.ListContainer>
       <S.ListGrid>
         {restaurants.map((restaurant) => (
-          <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-        ))}
+          <RestaurantCard
+          key={restaurant.id}
+          id={restaurant.id}
+          title={restaurant.titulo}
+          category={restaurant.tipo}
+          description={restaurant.descricao}
+          image={restaurant.capa}
+          rating={restaurant.avaliacao}
+          infos={restaurant.destacado ? ['Destaque da semana'] : []}
+          />
+          ))}
       </S.ListGrid>
     </S.ListContainer>
   );

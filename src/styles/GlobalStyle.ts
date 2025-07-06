@@ -1,16 +1,19 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
+import theme from './theme' // Importando nosso novo tema
 
 export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: ${theme.fontes.principal};
+    list-style: none;
+    text-decoration: none;
   }
 
   body {
-    background-color: ${(props) => props.theme.colors.background};
-    color: ${(props) => props.theme.colors.primary};
+    background-color: ${theme.cores.begeClaro};
+    color: ${theme.cores.rosa};
   }
 
   .container {
@@ -18,4 +21,4 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     margin: 0 auto;
   }
-`;
+`

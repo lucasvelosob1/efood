@@ -1,40 +1,53 @@
-import { Restaurant } from '../../services/mock';
-import Tag from '../Tag';
-import starIcon from '../../assets/star.svg';
-
-import * as S from './styles';
+import Tag from '../Tag'
+import * as S from './styles'
+import starIcon from '../../assets/star.svg'
 
 type Props = {
-  restaurant: Restaurant;
-};
+  title: string
+  category: string
+  description: string
+  image: string
+  infos?: string[]
+  rating: number
+  id: number
+}
 
-const RestaurantCard = ({ restaurant }: Props) => {
+const RestaurantCard = ({
+  title,
+  category,
+  description,
+  image,
+  infos,
+  rating,
+  id
+}: Props) => {
+  const getDescricao = (text: string) => {
+    if (text.length > 250) {
+      return text.slice(0, 247) + '...'
+    }
+    return text
+  }
+
   return (
     <S.Card>
-      <S.Imagem src={restaurant.capa} alt={restaurant.titulo} />
-
+      <S.Imagem src={image} alt={title} />
       <S.InfosContainer>
-        {restaurant.destacado && <Tag>Destaque da semana</Tag>}
-        <Tag>{restaurant.tipo}</Tag>
+        {infos && infos.map((info) => <Tag key={info}>{info}</Tag>)}
+        <Tag>{category}</Tag>
       </S.InfosContainer>
-
       <S.Conteudo>
-        <S.TituloContainer>
-          <S.Titulo>{restaurant.titulo}</S.Titulo>
+        <S.HeaderCard>
+          <S.Titulo>{title}</S.Titulo>
           <S.Nota>
-            <span>{restaurant.avaliacao}</span>
+            <span>{rating}</span>
             <img src={starIcon} alt="Estrela" />
           </S.Nota>
-        </S.TituloContainer>
-
-        <S.Descricao>{restaurant.descricao}</S.Descricao>
-
-        <S.BotaoSaibaMais to={`/perfil/${restaurant.id}`}>
-          Saiba mais
-        </S.BotaoSaibaMais>
+        </S.HeaderCard>
+        <S.Descricao>{getDescricao(description)}</S.Descricao>
+        <S.BotaoSaibaMais to={`/perfil/${id}`}>Saiba mais</S.BotaoSaibaMais>
       </S.Conteudo>
     </S.Card>
-  );
-};
+  )
+}
 
-export default RestaurantCard;
+export default RestaurantCard

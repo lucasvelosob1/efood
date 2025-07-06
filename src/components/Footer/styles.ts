@@ -27,7 +27,7 @@ export const LinkItem = styled.a`
 `;
 
 export const CopyrightText = styled.p`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.cores.rosa};
   font-size: 10px;
   max-width: 480px;
   margin: 0 auto;

@@ -1,26 +1,24 @@
-import { Product } from '../../services/mock';
-import ProductCard from '../ProductCard';
-import * as S from './styles';
+import ProductCard from '../ProductCard'
+import { Product } from '../../services/mock'
+import * as S from './styles'
 
 type Props = {
-  products: Product[];
-  onOpenModal: (product: Product) => void;
-};
+  products: Product[]
+  onOpenModal: (product: Product) => void
+}
 
 const ProductList = ({ products, onOpenModal }: Props) => (
-  <S.Container>
+  <S.ListContainer>
     <div className="container">
-      <S.List>
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onOpenModal={onOpenModal}
-          />
-        ))}
-      </S.List>
+      {products.map((product) => (
+        <ProductCard
+          key={product.id}
+          product={product}
+          onOpenModal={onOpenModal}
+        />
+      ))}
     </div>
-  </S.Container>
-);
+  </S.ListContainer>
+)
 
-export default ProductList;
+export default ProductList

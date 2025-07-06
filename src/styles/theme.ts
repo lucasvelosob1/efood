@@ -1,23 +1,22 @@
-const efoodTheme = {
-  colors: {
-    primary: '#E66767',
-    secondary: '#FFEBD9',
-    background: '#FFF8F2',
-    text: '#E66767',
-    white: '#FFFFFF', 
+const theme = {
+  cores: {
+    rosa: '#E66767',
+    begeClaro: '#FFF8F2',
+    begeMedio: '#FFEBD9',
+    branco: '#FFFFFF'
   },
-  fontSizes: {
-    small: '12px',
-    medium: '14px',
-    large: '16px',
-    xlarge: '18px',
+  fontes: {
+    principal: 'Roboto, sans-serif'
+  },
+  pesosDeFonte: {
+    regular: 400,
+    bold: 700,
+    black: 900
   },
   breakpoints: {
     tablet: '768px',
-    desktop: '1024px',
-  },
-};
+    desktop: '1024px'
+  }
+}
 
-export type Theme = typeof efoodTheme;
-
-export default efoodTheme;
+export default theme

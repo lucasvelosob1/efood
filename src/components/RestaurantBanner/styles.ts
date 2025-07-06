@@ -32,7 +32,7 @@ export const BannerContainer = styled.div`
 `
 
 export const CuisineType = styled.span`
-  font-weight: 100; // Agora o navegador sabe o que é o peso 100
+  font-weight: 100;
   font-size: 32px;
 `
 

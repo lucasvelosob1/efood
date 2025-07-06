@@ -18,7 +18,7 @@ export const CartContainer = styled.div`
   height: 100%;
   display: none;
   justify-content: flex-end;
-  z-index: 10; // Garantindo que fique acima de tudo
+  z-index: 10;
 
   &.is-open {
     display: flex;
@@ -32,7 +32,7 @@ export const Sidebar = styled.aside`
   width: 360px;
   display: flex;
   flex-direction: column;
-  color: ${(props) => props.theme.cores.begeMedio}; // Cor padrão do texto
+  color: ${(props) => props.theme.cores.begeMedio};
 `
 
 export const CartItem = styled.div`
@@ -154,7 +154,7 @@ export const ErrorText = styled.p`
   padding: 4px;
   border-radius: 4px;
   font-size: 12px;
-  margin-top: 4px !important; // !important para sobrepor a margem geral do <p>
+  margin-top: 4px !important;
   margin-bottom: 0 !important;
   text-align: center;
 `

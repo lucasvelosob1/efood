@@ -1,6 +1,6 @@
 import Hero from '../../components/Hero'
 import RestaurantList from '../../components/RestaurantList'
-import restaurantesMock from '../../services/mock' // Ou sua fonte de dados
+import restaurantesMock from '../../services/mock'
 
 const Home = () => {
   return (

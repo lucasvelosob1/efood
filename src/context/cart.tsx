@@ -1,5 +1,5 @@
 import { createContext, useReducer, useContext } from 'react';
-import { Product } from '../services/mock';
+import { Product } from '../models/Product';
 
 type CartState = {
   items: Product[];

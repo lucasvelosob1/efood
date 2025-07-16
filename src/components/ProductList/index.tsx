@@ -1,5 +1,5 @@
 import ProductCard from '../ProductCard'
-import { Product } from '../../services/mock'
+import { Product } from '../../models/Product'
 import * as S from './styles'
 
 type Props = {

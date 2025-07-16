@@ -4,7 +4,8 @@ import Header from '../../components/Header'
 import ProductList from '../../components/ProductList'
 import RestaurantBanner from '../../components/RestaurantBanner'
 import Modal from '../../components/Modal'
-import { Restaurant, Product } from '../../services/mock'
+import { Restaurant } from '../../models/Restaurant'
+import { Product } from '../../models/Product'
 
 const Profile = () => {
   const { id } = useParams()

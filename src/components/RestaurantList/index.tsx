@@ -1,4 +1,4 @@
-import { Restaurant } from '../../services/mock';
+import { Restaurant } from '../../models/Restaurant';
 import RestaurantCard from '../RestaurantCard';
 import * as S from './styles';
 

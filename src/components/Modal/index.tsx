@@ -1,4 +1,4 @@
-import { Product } from '../../services/mock'
+import { Product } from '../../models/Product'
 import { useCart } from '../../context/cart'
 import * as S from './styles'
 import closeIcon from '../../assets/close.svg'
@@ -30,7 +30,7 @@ const Modal = ({ product, onClose }: Props) => {
         <S.ProductImage src={product.foto} alt={product.nome} />
         <S.InfosContainer>
           <S.Title>{product.nome}</S.Title>
-          <S.Description>{product.descricaoDetalhada}</S.Description>
+          <S.Description>{product.descricao}</S.Description>
           <S.Portion>Serve: {product.porcao}</S.Portion>
           <S.AddToCartButton onClick={addToCart}>
             Adicionar ao carrinho - {formataPreco(product.preco)}

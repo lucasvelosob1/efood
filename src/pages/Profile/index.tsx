@@ -1,51 +1,72 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import Header from '../../components/Header';
-import ProductList from '../../components/ProductList';
-import Modal from '../../components/Modal';
-import RestaurantBanner from '../../components/RestaurantBanner';
-
-import { Product } from '../../services/mock';
-import restaurantesMock from '../../services/mock';
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import Header from '../../components/Header'
+import ProductList from '../../components/ProductList'
+import RestaurantBanner from '../../components/RestaurantBanner'
+import Modal from '../../components/Modal'
+import { Restaurant, Product } from '../../services/mock'
 
 const Profile = () => {
-  const { id } = useParams();
-  const restaurante = restaurantesMock.find(
-    (r) => r.id === parseInt(id as string)
-  );
+  const { id } = useParams()
 
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
-  if (!restaurante) {
-    return <h3>Restaurante não encontrado!</h3>;
-  }
+  useEffect(() => {
+    setIsLoading(true)
+    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setRestaurant(data)
+      })
+      .catch((error) => {
+        console.error('Falha ao buscar o restaurante:', error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [id])
 
   const handleOpenModal = (product: Product) => {
-    setSelectedProduct(product);
-  };
+    setSelectedProduct(product)
+  }
 
   const handleCloseModal = () => {
-    setSelectedProduct(null);
-  };
+    setSelectedProduct(null)
+  }
 
   return (
     <>
       <Header />
-      <RestaurantBanner
-        coverImage={restaurante.capa}
-        cuisine={restaurante.tipo}
-        name={restaurante.titulo}
-      />
-      <ProductList
-        products={restaurante.cardapio}
-        onOpenModal={handleOpenModal}
-      />
+      {isLoading ? (
+        <h2 style={{ textAlign: 'center', margin: '80px 0' }}>Carregando...</h2>
+      ) : (
+        <>
+          {restaurant ? (
+            <>
+              <RestaurantBanner
+                coverImage={restaurant.capa}
+                cuisine={restaurant.tipo}
+                name={restaurant.titulo}
+              />
+              <ProductList
+                products={restaurant.cardapio}
+                onOpenModal={handleOpenModal}
+              />
+            </>
+          ) : (
+            <h3 style={{ textAlign: 'center', margin: '80px 0' }}>
+              Restaurante não encontrado!
+            </h3>
+          )}
+        </>
+      )}
       {selectedProduct && (
         <Modal product={selectedProduct} onClose={handleCloseModal} />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

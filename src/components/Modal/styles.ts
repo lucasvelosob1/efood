@@ -21,15 +21,13 @@ export const ModalContent = styled.div`
   z-index: 1;
   display: flex;
   max-width: 1024px;
-  width: 90%; // Ocupa 90% da largura, bom para responsividade
+  width: 90%;
 
-  // --- INÍCIO DA MÁGICA DA RESPONSIVIDADE ---
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex-direction: column; // Coloca a imagem em cima do texto
+    flex-direction: column;
     padding: 24px 16px;
-    max-height: 90vh; // Garante que não saia da tela na vertical
-    overflow-y: auto; // Adiciona scroll se o conteúdo for muito grande
-  }
+    max-height: 90vh;
+    overflow-y: auto; 
 `
 
 export const CloseIcon = styled.img`
@@ -48,9 +46,9 @@ export const ProductImage = styled.img`
   display: block;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%; // Imagem ocupa toda a largura do modal no celular
-    height: auto; // Altura se ajusta para não distorcer
-    max-height: 250px; // Limita a altura da imagem
+    width: 100%;
+    height: auto;
+    max-height: 250px;
     margin-bottom: 16px;
   }
 `
@@ -61,7 +59,7 @@ export const InfosContainer = styled.div`
   flex-direction: column;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin-left: 0; // Remove a margem lateral no celular
+    margin-left: 0; 
   }
 `
 

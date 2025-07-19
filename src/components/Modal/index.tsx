@@ -1,7 +1,8 @@
+import { useDispatch } from 'react-redux'
 import { Product } from '../../models/Product'
-import { useCart } from '../../context/cart'
 import * as S from './styles'
 import closeIcon from '../../assets/close.svg'
+import { add, open } from '../../store/reducers/cart'
 
 type Props = {
   product: Product
@@ -16,17 +17,18 @@ const formataPreco = (preco = 0) => {
 }
 
 const Modal = ({ product, onClose }: Props) => {
-  const { dispatch } = useCart()
+  const dispatch = useDispatch()
 
   const addToCart = () => {
-    dispatch({ type: 'ADD_ITEM', payload: product })
+    dispatch(add(product))
+    dispatch(open())
     onClose()
   }
 
   return (
     <S.Overlay onClick={onClose}>
       <S.ModalContent onClick={(e) => e.stopPropagation()}>
-        <S.CloseIcon src={closeIcon} alt="Ícone de fechar" onClick={onClose} />
+        <S.CloseIcon src={closeIcon} alt="icone de fechar" onClick={onClose} />
         <S.ProductImage src={product.foto} alt={product.nome} />
         <S.InfosContainer>
           <S.Title>{product.nome}</S.Title>

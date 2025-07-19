@@ -1,10 +1,16 @@
+import { useSelector, useDispatch } from 'react-redux'
 import * as S from './styles'
-import { useCart } from '../../context/cart'
 import logo from '../../assets/logo.png'
+import { open } from '../../store/reducers/cart'
+import { RootState } from '../../store'
 
 const Header = () => {
-  const { state, dispatch } = useCart()
-  const itemCount = state.items.length
+  const dispatch = useDispatch()
+  const { items } = useSelector((state: RootState) => state.cart)
+
+  const openCart = () => {
+    dispatch(open())
+  }
 
   return (
     <S.HeaderBar>
@@ -13,8 +19,8 @@ const Header = () => {
         <S.LogoLink to="/">
           <img src={logo} alt="efood" />
         </S.LogoLink>
-        <S.CartButton onClick={() => dispatch({ type: 'OPEN_CART' })}>
-          {itemCount} produto(s) no carrinho
+        <S.CartButton onClick={openCart}>
+          {items.length} produto(s) no carrinho
         </S.CartButton>
       </div>
     </S.HeaderBar>

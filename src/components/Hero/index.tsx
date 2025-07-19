@@ -1,6 +1,6 @@
 import * as S from './styles'
 
-import logo from '../../assets/logo.png' // Garanta que o logo está aqui
+import logo from '../../assets/logo.png' 
 
 const Hero = () => (
   <S.HeroContainer>

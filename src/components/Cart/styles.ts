@@ -28,14 +28,24 @@ export const CartContainer = styled.div`
 export const Sidebar = styled.aside`
   background-color: ${(props) => props.theme.cores.rosa};
   z-index: 1;
-  padding: 32px 8px;
+  padding: 32px 8px 0 8px; // Removemos o padding de baixo
   width: 360px;
-  display: flex;
-  flex-direction: column;
-  color: ${(props) => props.theme.cores.begeMedio};
+  display: flex; // 1. Transforma a sidebar em um container flex
+  flex-direction: column; // 2. Organiza os itens em coluna
+
+  // A lista de itens vai crescer e rolar aqui
+  ul {
+    flex-grow: 1; // 3. Faz a lista ocupar todo o espaço vertical disponível
+    overflow-y: auto; // 4. Adiciona a barra de rolagem SÓ QUANDO NECESSÁRIO
+  }
+
+  // O botão e o total ficam fixos no final
+  .button-container {
+    padding: 24px 0;
+  }
 `
 
-export const CartItem = styled.div`
+export const CartItem = styled.li` // Mudamos de div para li para semântica
   background-color: ${(props) => props.theme.cores.begeMedio};
   display: flex;
   gap: 8px;
@@ -76,62 +86,10 @@ export const RemoveButton = styled.button`
 export const TotalPrice = styled.div`
   font-weight: bold;
   font-size: 14px;
-  margin-top: 40px;
   margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
-`
-
-export const FormContainer = styled.div`
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 22px;
-
-  h4 {
-    font-size: 16px;
-    margin-bottom: 16px;
-  }
-
-  p {
-    font-size: 14px;
-    line-height: 22px;
-    margin-bottom: 24px;
-  }
-`
-
-export const Row = styled.div`
-  display: flex;
-  gap: 34px;
-  align-items: flex-start;
-`
-
-export const InputGroup = styled.div`
-  flex: 1;
-  margin-top: 16px;
-`
-
-export const Label = styled.label`
-  display: block;
-  font-size: 14px;
-  margin-bottom: 8px;
-`
-
-export const Input = styled.input`
-  background-color: ${(props) => props.theme.cores.begeMedio};
-  border: none;
-  height: 32px;
-  padding: 0 8px;
-  width: 100%;
-  color: #4b4b4b;
-  font-weight: bold;
-
-  &.error {
-    border: 2px solid red;
-  }
-`
-
-export const ButtonGroup = styled.div`
-  margin-top: 24px;
+  color: ${(props) => props.theme.cores.begeMedio};
 `
 
 export const ActionButton = styled.button`
@@ -143,18 +101,4 @@ export const ActionButton = styled.button`
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-
-  &:first-child {
-    margin-bottom: 8px;
-  }
-`
-export const ErrorText = styled.p`
-  color: #fff;
-  background-color: #c0392b;
-  padding: 4px;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-top: 4px !important;
-  margin-bottom: 0 !important;
-  text-align: center;
 `

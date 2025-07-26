@@ -51,16 +51,21 @@ const Cart = () => {
                 </S.CartItem>
               ))}
             </ul>
-            <S.TotalPrice>
-              <span>Valor total</span>
-              <span>{formataPreco(calculateTotal())}</span>
-            </S.TotalPrice>
-            <S.ActionButton onClick={goToCheckout}>
-              Continuar com a entrega
-            </S.ActionButton>
+            <div className="button-container">
+              <S.TotalPrice>
+                <span>Valor total</span>
+                <span>{formataPreco(calculateTotal())}</span>
+              </S.TotalPrice>
+              <S.ActionButton onClick={goToCheckout}>
+                Continuar com a entrega
+              </S.ActionButton>
+            </div>
           </>
         ) : (
-          <p className="empty-text" style={{ color: 'white', textAlign: 'center' }}>
+          <p
+            className="empty-text"
+            style={{ color: 'white', textAlign: 'center' }}
+          >
             O carrinho está vazio. Adicione pelo menos um produto para continuar.
           </p>
         )}

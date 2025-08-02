@@ -28,24 +28,22 @@ export const CartContainer = styled.div`
 export const Sidebar = styled.aside`
   background-color: ${(props) => props.theme.cores.rosa};
   z-index: 1;
-  padding: 32px 8px 0 8px; // Removemos o padding de baixo
+  padding: 32px 8px 0 8px;
   width: 360px;
-  display: flex; // 1. Transforma a sidebar em um container flex
-  flex-direction: column; // 2. Organiza os itens em coluna
+  display: flex;
+  flex-direction: column;
 
-  // A lista de itens vai crescer e rolar aqui
   ul {
-    flex-grow: 1; // 3. Faz a lista ocupar todo o espaço vertical disponível
-    overflow-y: auto; // 4. Adiciona a barra de rolagem SÓ QUANDO NECESSÁRIO
+    flex-grow: 1;
+    overflow-y: auto;
   }
 
-  // O botão e o total ficam fixos no final
   .button-container {
     padding: 24px 0;
   }
 `
 
-export const CartItem = styled.li` // Mudamos de div para li para semântica
+export const CartItem = styled.li`
   background-color: ${(props) => props.theme.cores.begeMedio};
   display: flex;
   gap: 8px;

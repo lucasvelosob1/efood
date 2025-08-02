@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Form as FormikForm } from 'formik'
 import trashIcon from '../../assets/trash.svg'
 
 export const Container = styled.div`
@@ -6,6 +7,7 @@ export const Container = styled.div`
   max-width: 1024px;
   width: 100%;
   margin: 0 auto;
+  color: ${(props) => props.theme.cores.rosa};
 `
 
 export const List = styled.ul`
@@ -47,29 +49,26 @@ export const RemoveButton = styled.button`
 `
 
 export const TotalPrice = styled.div`
-  color: ${(props) => props.theme.cores.branco};
-  background-color: ${(props) => props.theme.cores.rosa};
-  padding: 16px;
+  color: #fff;
   font-weight: bold;
   font-size: 14px;
   margin-top: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
-  border-radius: 8px;
 `
+
 export const ActionButton = styled.button`
-  background-color: ${(props) => props.theme.cores.rosa};
-  color: ${(props) => props.theme.cores.begeMedio};
+  background-color: ${(props) => props.theme.cores.begeMedio};
+  color: ${(props) => props.theme.cores.rosa};
   border: none;
   width: 100%;
-  padding: 8px 0;
-  font-size: 16px;
+  padding: 4px 0;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  max-width: 250px;
-  float: right; 
 `
+
 export const EmptyCart = styled.div`
   text-align: center;
   padding: 40px;
@@ -83,5 +82,59 @@ export const EmptyCart = styled.div`
 
   p {
     margin-bottom: 24px;
+    line-height: 22px;
   }
+`
+
+export const StyledForm = styled(FormikForm)`
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+`
+
+export const Row = styled.div`
+  display: flex;
+  gap: 34px;
+`
+
+export const InputGroup = styled.div`
+  flex: 1;
+  margin-bottom: 8px;
+
+  label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    color: ${(props) => props.theme.cores.begeMedio};
+  }
+
+  input {
+    background-color: ${(props) => props.theme.cores.begeMedio};
+    border: 1px solid ${(props) => props.theme.cores.begeMedio};
+    height: 32px;
+    padding: 0 8px;
+    width: 100%;
+    color: #000;
+
+    &.error {
+      border: 2px solid red;
+    }
+  }
+`
+
+export const ButtonGroup = styled.div`
+  margin-top: 16px;
+  
+  button {
+    margin-bottom: 8px;
+  }
+`
+
+export const ErrorMsg = styled.p`
+  font-size: 12px;
+  color: red;
+  margin-top: 4px;
 `

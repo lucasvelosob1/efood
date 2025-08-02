@@ -16,7 +16,7 @@ const Profile = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
+    fetch(`https://ebac-fake-api.vercel.app/api/efood/restaurantes/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setRestaurant(data)

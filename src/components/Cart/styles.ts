@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Form } from 'formik'
 import trashIcon from '../../assets/trash.svg'
 
 export const Overlay = styled.div`
@@ -32,14 +33,18 @@ export const Sidebar = styled.aside`
   width: 360px;
   display: flex;
   flex-direction: column;
-
+  color: #fff;
   ul {
     flex-grow: 1;
     overflow-y: auto;
   }
 
   .button-container {
-    padding: 24px 0;
+    padding: 16px 0;
+  }
+
+  .empty-text {
+    text-align: center;
   }
 `
 
@@ -99,4 +104,53 @@ export const ActionButton = styled.button`
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+`
+export const Formulario = styled(Form)`
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+`
+
+export const InputGroup = styled.div`
+  margin-bottom: 8px;
+
+  label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input {
+    background-color: ${(props) => props.theme.cores.begeMedio};
+    border: 1px solid ${(props) => props.theme.cores.begeMedio};
+    height: 32px;
+    padding: 0 8px;
+    width: 100%;
+
+    &.error {
+      border: 2px solid red;
+    }
+  }
+`
+
+export const ButtonGroup = styled.div`
+  margin-top: 24px;
+
+  button {
+    margin-bottom: 8px;
+  }
+`
+
+export const ErrorMsg = styled.p`
+  font-size: 12px;
+  color: #fff;
+  margin-top: 4px;
 `

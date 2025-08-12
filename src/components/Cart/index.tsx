@@ -1,8 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+
 import * as S from './styles'
 import { RootState } from '../../store'
-import { remove, close } from '../../store/reducers/cart'
+import { remove, close, changeStep, clear } from '../../store/reducers/cart'
+import { usePurchaseMutation } from '../../services/api'
 
 const formataPreco = (preco = 0) => {
   return new Intl.NumberFormat('pt-BR', {
@@ -12,9 +15,9 @@ const formataPreco = (preco = 0) => {
 }
 
 const Cart = () => {
-  const { isOpen, items } = useSelector((state: RootState) => state.cart)
+  const { isOpen, items, step } = useSelector((state: RootState) => state.cart)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [purchase, { data, isLoading }] = usePurchaseMutation()
 
   const closeCart = () => {
     dispatch(close())
@@ -24,51 +27,151 @@ const Cart = () => {
     dispatch(remove(id))
   }
 
-  const goToCheckout = () => {
-    navigate('/cart')
-    closeCart()
+  const goToNextStep = () => {
+    if (step === 'cart') {
+      dispatch(changeStep('delivery'))
+    } else if (step === 'delivery') {
+      dispatch(changeStep('payment'))
+    }
+  }
+
+  const goToPrevStep = () => {
+    if (step === 'payment') {
+      dispatch(changeStep('delivery'))
+    } else if (step === 'delivery') {
+      dispatch(changeStep('cart'))
+    }
   }
 
   const calculateTotal = () => {
     return items.reduce((acc, item) => acc + item.preco, 0)
   }
 
+  const validationSchema = Yup.object().shape({
+    receiver: Yup.string().required('Campo obrigatório'),
+    address: Yup.string().required('Campo obrigatório'),
+    city: Yup.string().required('Campo obrigatório'),
+    zipCode: Yup.string().min(8, 'CEP inválido').required('Campo obrigatório'),
+    number: Yup.string().required('Campo obrigatório'),
+    cardOwner: Yup.string().required('Campo obrigatório'),
+    cardNumber: Yup.string().min(16, 'Número de cartão inválido').required('Campo obrigatório'),
+    cardCode: Yup.string().min(3, 'CVV inválido').required('Campo obrigatório'),
+    expiresMonth: Yup.string().required('Campo obrigatório'),
+    expiresYear: Yup.string().required('Campo obrigatório'),
+  })
+
+  const renderCartList = () => (
+    <>
+      <ul>
+        {items.map((item) => (
+          <S.CartItem key={item.id}>
+            <img src={item.foto} alt={item.nome} />
+            <div>
+              <h4>{item.nome}</h4>
+              <p>{formataPreco(item.preco)}</p>
+            </div>
+            <S.RemoveButton onClick={() => removeItem(item.id)} />
+          </S.CartItem>
+        ))}
+      </ul>
+      <div className="button-container">
+        <S.TotalPrice>
+          <span>Valor total</span>
+          <span>{formataPreco(calculateTotal())}</span>
+        </S.TotalPrice>
+        <S.ActionButton onClick={goToNextStep}>Continuar com a entrega</S.ActionButton>
+      </div>
+    </>
+  )
+
+  const renderForms = (formik: any) => (
+    <Form>
+      {step === 'delivery' && (
+        <>
+          <h2>Entrega</h2>
+          <S.InputGroup>
+            <label htmlFor="receiver">Quem irá receber</label>
+            <Field id="receiver" name="receiver" type="text" className={formik.errors.receiver && formik.touched.receiver ? 'error' : ''} />
+            <ErrorMessage name="receiver" component={S.ErrorMsg} />
+          </S.InputGroup>
+          {/* ... Outros campos de entrega ... */}
+          <S.ButtonGroup>
+            <S.ActionButton type="button" onClick={goToNextStep}>Continuar com o pagamento</S.ActionButton>
+            <S.ActionButton type="button" onClick={goToPrevStep}>Voltar para o carrinho</S.ActionButton>
+          </S.ButtonGroup>
+        </>
+      )}
+
+      {step === 'payment' && (
+        <>
+          <h2>Pagamento - Valor a pagar {formataPreco(calculateTotal())}</h2>
+          <S.InputGroup>
+            <label htmlFor="cardOwner">Nome no cartão</label>
+            <Field id="cardOwner" name="cardOwner" type="text" className={formik.errors.cardOwner && formik.touched.cardOwner ? 'error' : ''} />
+            <ErrorMessage name="cardOwner" component={S.ErrorMsg} />
+          </S.InputGroup>
+          {/* ... Outros campos de pagamento ... */}
+          <S.ButtonGroup>
+            <S.ActionButton type="submit" disabled={isLoading}>
+              {isLoading ? 'Finalizando...' : 'Finalizar pagamento'}
+            </S.ActionButton>
+            <S.ActionButton type="button" onClick={goToPrevStep}>Voltar para a edição de endereço</S.ActionButton>
+          </S.ButtonGroup>
+        </>
+      )}
+    </Form>
+  )
+
+  const renderConfirmed = () => (
+    <>
+      <h2>Pedido realizado - {data?.orderId}</h2>
+      <p>
+        Estamos felizes em informar que seu pedido já está em processo de
+        preparação...
+      </p>
+      {/* ... Outros parágrafos ... */}
+      <S.ActionButton
+        style={{ marginTop: '24px' }}
+        type="button"
+        onClick={() => {
+          dispatch(clear())
+          closeCart()
+        }}
+      >
+        Concluir
+      </S.ActionButton>
+    </>
+  )
+
   return (
     <S.CartContainer className={isOpen ? 'is-open' : ''}>
       <S.Overlay onClick={closeCart} />
       <S.Sidebar>
-        {items.length > 0 ? (
-          <>
-            <ul>
-              {items.map((item) => (
-                <S.CartItem key={item.id}>
-                  <img src={item.foto} alt={item.nome} />
-                  <div>
-                    <h4>{item.nome}</h4>
-                    <p>{formataPreco(item.preco)}</p>
-                  </div>
-                  <S.RemoveButton onClick={() => removeItem(item.id)} />
-                </S.CartItem>
-              ))}
-            </ul>
-            <div className="button-container">
-              <S.TotalPrice>
-                <span>Valor total</span>
-                <span>{formataPreco(calculateTotal())}</span>
-              </S.TotalPrice>
-              <S.ActionButton onClick={goToCheckout}>
-                Continuar com a entrega
-              </S.ActionButton>
-            </div>
-          </>
-        ) : (
-          <p
-            className="empty-text"
-            style={{ color: 'white', textAlign: 'center' }}
-          >
-            O carrinho está vazio. Adicione pelo menos um produto para continuar.
-          </p>
-        )}
+        <Formik
+          initialValues={{
+            receiver: '', address: '', city: '', zipCode: '', number: '', complement: '',
+            cardOwner: '', cardNumber: '', cardCode: '', expiresMonth: '', expiresYear: ''
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(values) => {
+            const orderPayload = {
+              products: items.map((item) => ({ id: item.id, price: item.preco })),
+              delivery: { receiver: values.receiver, address: { description: values.address, city: values.city, zipCode: values.zipCode, number: Number(values.number), complement: values.complement } },
+              payment: { card: { name: values.cardOwner, number: values.cardNumber, code: Number(values.cardCode), expires: { month: Number(values.expiresMonth), year: Number(values.expiresYear) } } }
+            }
+            purchase(orderPayload).then(() => {
+              dispatch(changeStep('confirmed'))
+            })
+          }}
+        >
+          {(formik) => (
+            <S.Formulario>
+              {step === 'cart' && renderCartList()}
+              {(step === 'delivery' || step === 'payment') && renderForms(formik)}
+              {step === 'confirmed' && renderConfirmed()}
+            </S.Formulario>
+          )}
+        </Formik>
       </S.Sidebar>
     </S.CartContainer>
   )

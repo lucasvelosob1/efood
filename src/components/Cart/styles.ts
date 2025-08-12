@@ -117,6 +117,10 @@ export const Formulario = styled(Form)`
     line-height: 22px;
   }
 `
+export const Row = styled.div`
+  display: flex;
+  gap: 34px;
+  `
 
 export const InputGroup = styled.div`
   margin-bottom: 8px;

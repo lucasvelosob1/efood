@@ -94,7 +94,32 @@ const Cart = () => {
             <Field id="receiver" name="receiver" type="text" className={formik.errors.receiver && formik.touched.receiver ? 'error' : ''} />
             <ErrorMessage name="receiver" component={S.ErrorMsg} />
           </S.InputGroup>
-          {/* ... Outros campos de entrega ... */}
+          <S.InputGroup>
+            <label htmlFor="address">Endereço</label>
+            <Field id="address" name="address" type="text" className={formik.errors.address && formik.touched.address ? 'error' : ''} />
+            <ErrorMessage name="address" component={S.ErrorMsg} />
+          </S.InputGroup>
+          <S.InputGroup>
+            <label htmlFor="city">Cidade</label>
+            <Field id="city" name="city" type="text" className={formik.errors.city && formik.touched.city ? 'error' : ''} />
+            <ErrorMessage name="city" component={S.ErrorMsg} />
+          </S.InputGroup>
+          <S.Row>
+            <S.InputGroup>
+              <label htmlFor="zipCode">CEP</label>
+              <Field id="zipCode" name="zipCode" type="text" className={formik.errors.zipCode && formik.touched.zipCode ? 'error' : ''} />
+              <ErrorMessage name="zipCode" component={S.ErrorMsg} />
+            </S.InputGroup>
+            <S.InputGroup>
+              <label htmlFor="number">Número</label>
+              <Field id="number" name="number" type="text" className={formik.errors.number && formik.touched.number ? 'error' : ''} />
+              <ErrorMessage name="number" component={S.ErrorMsg} />
+            </S.InputGroup>
+          </S.Row>
+          <S.InputGroup>
+            <label htmlFor="complement">Complemento (opcional)</label>
+            <Field id="complement" name="complement" type="text" />
+          </S.InputGroup>
           <S.ButtonGroup>
             <S.ActionButton type="button" onClick={goToNextStep}>Continuar com o pagamento</S.ActionButton>
             <S.ActionButton type="button" onClick={goToPrevStep}>Voltar para o carrinho</S.ActionButton>
@@ -110,7 +135,30 @@ const Cart = () => {
             <Field id="cardOwner" name="cardOwner" type="text" className={formik.errors.cardOwner && formik.touched.cardOwner ? 'error' : ''} />
             <ErrorMessage name="cardOwner" component={S.ErrorMsg} />
           </S.InputGroup>
-          {/* ... Outros campos de pagamento ... */}
+          <S.Row>
+            <S.InputGroup>
+              <label htmlFor="cardNumber">Número do cartão</label>
+              <Field id="cardNumber" name="cardNumber" type="text" className={formik.errors.cardNumber && formik.touched.cardNumber ? 'error' : ''} />
+              <ErrorMessage name="cardNumber" component={S.ErrorMsg} />
+            </S.InputGroup>
+            <S.InputGroup>
+              <label htmlFor="cardCode">CVV</label>
+              <Field id="cardCode" name="cardCode" type="text" className={formik.errors.cardCode && formik.touched.cardCode ? 'error' : ''} />
+              <ErrorMessage name="cardCode" component={S.ErrorMsg} />
+            </S.InputGroup>
+          </S.Row>
+          <S.Row>
+            <S.InputGroup>
+              <label htmlFor="expiresMonth">Mês de vencimento</label>
+              <Field id="expiresMonth" name="expiresMonth" type="text" className={formik.errors.expiresMonth && formik.touched.expiresMonth ? 'error' : ''} />
+              <ErrorMessage name="expiresMonth" component={S.ErrorMsg} />
+            </S.InputGroup>
+            <S.InputGroup>
+              <label htmlFor="expiresYear">Ano de vencimento</label>
+              <Field id="expiresYear" name="expiresYear" type="text" className={formik.errors.expiresYear && formik.touched.expiresYear ? 'error' : ''} />
+              <ErrorMessage name="expiresYear" component={S.ErrorMsg} />
+            </S.InputGroup>
+          </S.Row>
           <S.ButtonGroup>
             <S.ActionButton type="submit" disabled={isLoading}>
               {isLoading ? 'Finalizando...' : 'Finalizar pagamento'}
@@ -129,7 +177,7 @@ const Cart = () => {
         Estamos felizes em informar que seu pedido já está em processo de
         preparação...
       </p>
-      {/* ... Outros parágrafos ... */}
+
       <S.ActionButton
         style={{ marginTop: '24px' }}
         type="button"

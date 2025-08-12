@@ -79,7 +79,7 @@ const Cart = () => {
           <span>Valor total</span>
           <span>{formataPreco(calculateTotal())}</span>
         </S.TotalPrice>
-        <S.ActionButton onClick={goToNextStep}>Continuar com a entrega</S.ActionButton>
+        <S.ActionButton type="button" onClick={goToNextStep}>Continuar com a entrega</S.ActionButton>
       </div>
     </>
   )

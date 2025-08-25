@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage, FormikProps } from 'formik'
 import * as Yup from 'yup'
 
 import * as S from './styles'
@@ -17,7 +18,8 @@ const formataPreco = (preco = 0) => {
 const Cart = () => {
   const { isOpen, items, step } = useSelector((state: RootState) => state.cart)
   const dispatch = useDispatch()
-  const [purchase, { data, isLoading }] = usePurchaseMutation()
+  const [purchase, { isLoading }] = usePurchaseMutation()
+  const [orderId, setOrderId] = useState('')
 
   const closeCart = () => {
     dispatch(close())
@@ -25,14 +27,6 @@ const Cart = () => {
 
   const removeItem = (id: number) => {
     dispatch(remove(id))
-  }
-
-  const goToNextStep = () => {
-    if (step === 'cart') {
-      dispatch(changeStep('delivery'))
-    } else if (step === 'delivery') {
-      dispatch(changeStep('payment'))
-    }
   }
 
   const goToPrevStep = () => {
@@ -54,11 +48,28 @@ const Cart = () => {
     zipCode: Yup.string().min(8, 'CEP inválido').required('Campo obrigatório'),
     number: Yup.string().required('Campo obrigatório'),
     cardOwner: Yup.string().required('Campo obrigatório'),
-    cardNumber: Yup.string().min(16, 'Número de cartão inválido').required('Campo obrigatório'),
-    cardCode: Yup.string().min(3, 'CVV inválido').required('Campo obrigatório'),
+    cardNumber: Yup.string()
+      .min(16, 'Número de cartão inválido')
+      .required('Campo obrigatório'),
+    cardCode: Yup.string()
+      .min(3, 'CVV inválido')
+      .required('Campo obrigatório'),
     expiresMonth: Yup.string().required('Campo obrigatório'),
-    expiresYear: Yup.string().required('Campo obrigatório'),
+    expiresYear: Yup.string().required('Campo obrigatório')
   })
+
+  const handleNextStep = async (formik: FormikProps<any>) => {
+    const deliveryFields = ['receiver', 'address', 'city', 'zipCode', 'number']
+
+    deliveryFields.forEach((field) => formik.setFieldTouched(field, true))
+
+    const errors = await formik.validateForm()
+    const hasDeliveryErrors = deliveryFields.some((field) => errors[field])
+
+    if (!hasDeliveryErrors) {
+      dispatch(changeStep('payment'))
+    }
+  }
 
   const renderCartList = () => (
     <>
@@ -79,40 +90,80 @@ const Cart = () => {
           <span>Valor total</span>
           <span>{formataPreco(calculateTotal())}</span>
         </S.TotalPrice>
-        <S.ActionButton type="button" onClick={goToNextStep}>Continuar com a entrega</S.ActionButton>
+        <S.ActionButton
+          type="button"
+          onClick={() => dispatch(changeStep('delivery'))}
+        >
+          Continuar com a entrega
+        </S.ActionButton>
       </div>
     </>
   )
 
-  const renderForms = (formik: any) => (
+  const renderForms = (formik: FormikProps<any>) => (
     <Form>
       {step === 'delivery' && (
         <>
           <h2>Entrega</h2>
           <S.InputGroup>
             <label htmlFor="receiver">Quem irá receber</label>
-            <Field id="receiver" name="receiver" type="text" className={formik.errors.receiver && formik.touched.receiver ? 'error' : ''} />
+            <Field
+              id="receiver"
+              name="receiver"
+              type="text"
+              className={
+                formik.errors.receiver && formik.touched.receiver ? 'error' : ''
+              }
+            />
             <ErrorMessage name="receiver" component={S.ErrorMsg} />
           </S.InputGroup>
           <S.InputGroup>
             <label htmlFor="address">Endereço</label>
-            <Field id="address" name="address" type="text" className={formik.errors.address && formik.touched.address ? 'error' : ''} />
+            <Field
+              id="address"
+              name="address"
+              type="text"
+              className={
+                formik.errors.address && formik.touched.address ? 'error' : ''
+              }
+            />
             <ErrorMessage name="address" component={S.ErrorMsg} />
           </S.InputGroup>
           <S.InputGroup>
             <label htmlFor="city">Cidade</label>
-            <Field id="city" name="city" type="text" className={formik.errors.city && formik.touched.city ? 'error' : ''} />
+            <Field
+              id="city"
+              name="city"
+              type="text"
+              className={
+                formik.errors.city && formik.touched.city ? 'error' : ''
+              }
+            />
             <ErrorMessage name="city" component={S.ErrorMsg} />
           </S.InputGroup>
           <S.Row>
             <S.InputGroup>
               <label htmlFor="zipCode">CEP</label>
-              <Field id="zipCode" name="zipCode" type="text" className={formik.errors.zipCode && formik.touched.zipCode ? 'error' : ''} />
+              <Field
+                id="zipCode"
+                name="zipCode"
+                type="text"
+                className={
+                  formik.errors.zipCode && formik.touched.zipCode ? 'error' : ''
+                }
+              />
               <ErrorMessage name="zipCode" component={S.ErrorMsg} />
             </S.InputGroup>
             <S.InputGroup>
               <label htmlFor="number">Número</label>
-              <Field id="number" name="number" type="text" className={formik.errors.number && formik.touched.number ? 'error' : ''} />
+              <Field
+                id="number"
+                name="number"
+                type="text"
+                className={
+                  formik.errors.number && formik.touched.number ? 'error' : ''
+                }
+              />
               <ErrorMessage name="number" component={S.ErrorMsg} />
             </S.InputGroup>
           </S.Row>
@@ -121,8 +172,12 @@ const Cart = () => {
             <Field id="complement" name="complement" type="text" />
           </S.InputGroup>
           <S.ButtonGroup>
-            <S.ActionButton type="button" onClick={goToNextStep}>Continuar com o pagamento</S.ActionButton>
-            <S.ActionButton type="button" onClick={goToPrevStep}>Voltar para o carrinho</S.ActionButton>
+            <S.ActionButton type="button" onClick={() => handleNextStep(formik)}>
+              Continuar com o pagamento
+            </S.ActionButton>
+            <S.ActionButton type="button" onClick={goToPrevStep}>
+              Voltar para o carrinho
+            </S.ActionButton>
           </S.ButtonGroup>
         </>
       )}
@@ -132,30 +187,75 @@ const Cart = () => {
           <h2>Pagamento - Valor a pagar {formataPreco(calculateTotal())}</h2>
           <S.InputGroup>
             <label htmlFor="cardOwner">Nome no cartão</label>
-            <Field id="cardOwner" name="cardOwner" type="text" className={formik.errors.cardOwner && formik.touched.cardOwner ? 'error' : ''} />
+            <Field
+              id="cardOwner"
+              name="cardOwner"
+              type="text"
+              className={
+                formik.errors.cardOwner && formik.touched.cardOwner
+                  ? 'error'
+                  : ''
+              }
+            />
             <ErrorMessage name="cardOwner" component={S.ErrorMsg} />
           </S.InputGroup>
           <S.Row>
             <S.InputGroup>
               <label htmlFor="cardNumber">Número do cartão</label>
-              <Field id="cardNumber" name="cardNumber" type="text" className={formik.errors.cardNumber && formik.touched.cardNumber ? 'error' : ''} />
+              <Field
+                id="cardNumber"
+                name="cardNumber"
+                type="text"
+                className={
+                  formik.errors.cardNumber && formik.touched.cardNumber
+                    ? 'error'
+                    : ''
+                }
+              />
               <ErrorMessage name="cardNumber" component={S.ErrorMsg} />
             </S.InputGroup>
             <S.InputGroup>
               <label htmlFor="cardCode">CVV</label>
-              <Field id="cardCode" name="cardCode" type="text" className={formik.errors.cardCode && formik.touched.cardCode ? 'error' : ''} />
+              <Field
+                id="cardCode"
+                name="cardCode"
+                type="text"
+                className={
+                  formik.errors.cardCode && formik.touched.cardCode
+                    ? 'error'
+                    : ''
+                }
+              />
               <ErrorMessage name="cardCode" component={S.ErrorMsg} />
             </S.InputGroup>
           </S.Row>
           <S.Row>
             <S.InputGroup>
               <label htmlFor="expiresMonth">Mês de vencimento</label>
-              <Field id="expiresMonth" name="expiresMonth" type="text" className={formik.errors.expiresMonth && formik.touched.expiresMonth ? 'error' : ''} />
+              <Field
+                id="expiresMonth"
+                name="expiresMonth"
+                type="text"
+                className={
+                  formik.errors.expiresMonth && formik.touched.expiresMonth
+                    ? 'error'
+                    : ''
+                }
+              />
               <ErrorMessage name="expiresMonth" component={S.ErrorMsg} />
             </S.InputGroup>
             <S.InputGroup>
               <label htmlFor="expiresYear">Ano de vencimento</label>
-              <Field id="expiresYear" name="expiresYear" type="text" className={formik.errors.expiresYear && formik.touched.expiresYear ? 'error' : ''} />
+              <Field
+                id="expiresYear"
+                name="expiresYear"
+                type="text"
+                className={
+                  formik.errors.expiresYear && formik.touched.expiresYear
+                    ? 'error'
+                    : ''
+                }
+              />
               <ErrorMessage name="expiresYear" component={S.ErrorMsg} />
             </S.InputGroup>
           </S.Row>
@@ -163,33 +263,36 @@ const Cart = () => {
             <S.ActionButton type="submit" disabled={isLoading}>
               {isLoading ? 'Finalizando...' : 'Finalizar pagamento'}
             </S.ActionButton>
-            <S.ActionButton type="button" onClick={goToPrevStep}>Voltar para a edição de endereço</S.ActionButton>
+            <S.ActionButton type="button" onClick={goToPrevStep}>
+              Voltar para a edição de endereço
+            </S.ActionButton>
           </S.ButtonGroup>
         </>
       )}
     </Form>
   )
 
-  const renderConfirmed = () => (
-    <>
-      <h2>Pedido realizado - {data?.orderId}</h2>
-      <p>
-        Estamos felizes em informar que seu pedido já está em processo de
-        preparação...
-      </p>
-
-      <S.ActionButton
-        style={{ marginTop: '24px' }}
-        type="button"
-        onClick={() => {
-          dispatch(clear())
-          closeCart()
-        }}
-      >
-        Concluir
-      </S.ActionButton>
-    </>
-  )
+const renderConfirmed = () => (
+  <>
+    <h2>Pedido realizado - {orderId}</h2>
+    <p>
+      Estamos felizes em informar que seu pedido já está em processo de
+      preparação...
+    </p>
+    <S.ActionButton
+      style={{ marginTop: '24px' }}
+      type="button"
+      onClick={() => {
+        dispatch(clear())
+        dispatch(changeStep('cart'))
+        setOrderId('')
+        closeCart()
+      }}
+    >
+      Concluir
+    </S.ActionButton>
+  </>
+)
 
   return (
     <S.CartContainer className={isOpen ? 'is-open' : ''}>
@@ -197,27 +300,64 @@ const Cart = () => {
       <S.Sidebar>
         <Formik
           initialValues={{
-            receiver: '', address: '', city: '', zipCode: '', number: '', complement: '',
-            cardOwner: '', cardNumber: '', cardCode: '', expiresMonth: '', expiresYear: ''
+            receiver: '',
+            address: '',
+            city: '',
+            zipCode: '',
+            number: '',
+            complement: '',
+            cardOwner: '',
+            cardNumber: '',
+            cardCode: '',
+            expiresMonth: '',
+            expiresYear: ''
           }}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
+          onSubmit={async (values, { resetForm }) => {
             const orderPayload = {
-              products: items.map((item) => ({ id: item.id, price: item.preco })),
-              delivery: { receiver: values.receiver, address: { description: values.address, city: values.city, zipCode: values.zipCode, number: Number(values.number), complement: values.complement } },
-              payment: { card: { name: values.cardOwner, number: values.cardNumber, code: Number(values.cardCode), expires: { month: Number(values.expiresMonth), year: Number(values.expiresYear) } } }
+              products: items.map((item) => ({
+                id: item.id,
+                price: item.preco
+              })),
+              delivery: {
+                receiver: values.receiver,
+                address: {
+                  description: values.address,
+                  city: values.city,
+                  zipCode: values.zipCode,
+                  number: Number(values.number),
+                  complement: values.complement
+                }
+              },
+              payment: {
+                card: {
+                  name: values.cardOwner,
+                  number: values.cardNumber,
+                  code: Number(values.cardCode),
+                  expires: {
+                    month: Number(values.expiresMonth),
+                    year: Number(values.expiresYear)
+                  }
+                }
+              }
             }
-            purchase(orderPayload).then(() => {
+            try {
+              const response = await purchase(orderPayload).unwrap()
+              setOrderId(response.orderId)
               dispatch(changeStep('confirmed'))
-            })
+              resetForm()
+            } catch (error) {
+              console.error('Falha na compra:', error)
+            }
           }}
         >
           {(formik) => (
-            <S.Formulario>
+            <div className="container">
               {step === 'cart' && renderCartList()}
-              {(step === 'delivery' || step === 'payment') && renderForms(formik)}
+              {(step === 'delivery' || step === 'payment') &&
+                renderForms(formik)}
               {step === 'confirmed' && renderConfirmed()}
-            </S.Formulario>
+            </div>
           )}
         </Formik>
       </S.Sidebar>
